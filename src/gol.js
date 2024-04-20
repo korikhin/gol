@@ -1,4 +1,4 @@
-const edge = 20;
+const edge = 4;
 const width = 1200;
 const height = 700;
 const rows = height / edge;
