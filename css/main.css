@@ -22,7 +22,7 @@
 body {
 	align-items: center;
 	background-color: #e5e5f7;
-	background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f7 40px ), repeating-linear-gradient( #bfabdf55, #bfabdf );
+	background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f7 80px ), repeating-linear-gradient( #bfabdf55, #bfabdf );
 	display: flex;
 	height: 100vh;
 	justify-content: center;

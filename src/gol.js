@@ -1,4 +1,4 @@
-const edge = 3;
+const edge = 5;
 const width = 1200;
 const height = 700;
 const rows = Math.floor(height / edge);
