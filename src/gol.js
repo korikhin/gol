@@ -1,8 +1,8 @@
-const edge = 4;
+const edge = 3;
 const width = 1200;
 const height = 700;
-const rows = height / edge;
-const cols = width / edge;
+const rows = Math.floor(height / edge);
+const cols = Math.floor(width / edge);
 
 const moldOpacity = 10;
 const fpsDefault = 30;
@@ -13,7 +13,7 @@ let isLooping = true;
 let moldMode = false;
 
 function setup() {
-  createCanvas(width, height).parent("display");
+  createCanvas(cols * edge, rows * edge).parent("display");
 
   colorMode(HSB, 360, 255, 255, 100);
   frameRate(fpsDefault);
