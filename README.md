@@ -1,3 +1,5 @@
 # Conway's Game of Life
 
-![Game of Life Demo](img/demo.png)
+It's on the torus. It's interactive.
+
+![Game of Life Demo](img/demo.jpg)
