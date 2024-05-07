@@ -1,7 +1,7 @@
-const EDGE = 4;
+const EDGE = 10;
 const CELL = EDGE + 2;
-const ROWS = 120;
-const COLS = 180;
+const ROWS = 60;
+const COLS = 80;
 
 const fpsDefault = 30;
 const moldOpacity = 10;
@@ -25,7 +25,7 @@ function setup() {
 }
 
 function draw() {
-  if (!moldMode) background(255);
+  if (!moldMode) clear();
 
   const fps = select("#fps");
   frameRate(fps ? fps.value() : fpsDefault);
@@ -105,8 +105,9 @@ function mousePressed() {
   const col = Math.floor(mouseX / CELL);
   if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
 
-  grid[row][col] ? fill(255) : fill(0);
+  fill(0);
   drawCell(row, col);
+
   grid[row][col] = !grid[row][col];
 }
 
@@ -116,14 +117,14 @@ function mouseMoved() {
   const row = Math.floor(mouseY / CELL);
   const col = Math.floor(mouseX / CELL);
 
+  fill(0);
   if (pRow >= 0 && pCol >= 0 && !grid[pRow][pCol]) {
-    fill(255);
+    erase();
     drawCell(pRow, pCol);
+    noErase();
   }
-
   if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
     if (!grid[row][col]) {
-      fill(0);
       drawCell(row, col);
     }
 

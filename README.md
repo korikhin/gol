@@ -2,4 +2,4 @@
 
 It's on the torus. It's interactive.
 
-![Game of Life Demo](img/demo.jpg)
+![Game of Life Demo](img/demo.webp "Demo")

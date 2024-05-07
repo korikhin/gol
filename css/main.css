@@ -2,6 +2,9 @@
 
 :root {
     --index: calc(1vh + 1vw);
+
+    --blur-controls: blur(0.15rem);
+    --blur-display: blur(1rem);
 }
 
 /* Palette */
@@ -10,7 +13,6 @@
 
     --color-blue-alpha: rgb(100, 120, 250, 0.7);
     --color-blue-dark: rgb(80, 90, 190);
-    /* --color-blue: rgb(75, 105, 255); */
     --color-blue: rgb(100, 120, 250);
 
     --color-grey-dark-alpha: rgb(10, 10, 10, 0.7);
@@ -19,15 +21,15 @@
     --color-grey-light: rgb(230, 230, 250);
     --color-grey: rgb(170, 170, 170);
 
-    --color-snow-alpha: rgb(255, 250, 250, 0.7);
-    --color-snow: rgb(255, 255, 255);
+    --color-white-alpha: rgb(255, 255, 255, 0.4);
+    --color-white: rgb(255, 255, 255);
 }
 
 * {
     box-sizing: border-box;
     color: var(--color-grey-dark);
     font:
-        1em/1em "Courier New",
+        1rem/1rem "Courier New",
         monospace,
         sans-serif;
     margin: 0;
@@ -49,7 +51,7 @@ body {
     background-image: repeating-radial-gradient(
             circle at calc(-1 * var(--index)) calc(-2 * var(--index)),
             transparent 0,
-            var(--color-grey-light) calc(3 * var(--index))
+            var(--color-grey-light) 22%
         ),
         repeating-linear-gradient(var(--color-grey-light-alpha), var(--color-blue-alpha));
     display: flex;
@@ -60,8 +62,8 @@ main {
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
-    padding: 2em;
+    gap: 1.5rem;
+    padding: 2rem;
 }
 
 .title {
@@ -73,17 +75,19 @@ main {
 
 .title p {
     font-weight: bold;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.2rem;
     text-transform: uppercase;
 }
 
 .display {
-    background-color: var(--color-snow);
-    border-radius: 1em;
-    border: inset 0.4em var(--color-blue);
-    box-shadow: 0.2em 0.2em 0.4em var(--color-black-alpha);
+    -webkit-backdrop-filter: var(--blur-display);
+    backdrop-filter: var(--blur-display);
+    background-color: var(--color-white-alpha);
+    border-radius: 1rem;
+    border: inset 0.4rem var(--color-blue);
+    box-shadow: 0.2rem 0.2rem 0.4rem var(--color-black-alpha);
     max-width: fit-content;
-    padding: 1em;
+    padding: 1rem;
 }
 
 .display canvas {
@@ -94,32 +98,32 @@ main {
 .controls {
     align-items: center;
     display: flex;
-    gap: 1em;
+    gap: 1rem;
 }
 
 .button {
-    -webkit-backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: var(--blur-controls);
     align-items: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: var(--blur-controls);
     background-color: var(--color-grey-dark-alpha);
-    border-radius: 1em;
-    border: 0.1em solid var(--color-grey-dark);
-    box-shadow: 0.1em 0.1em 0.2em var(--color-black-alpha);
+    border-radius: 1rem;
+    border: 0.1rem solid var(--color-grey-dark);
+    box-shadow: 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
     cursor: pointer;
     display: flex;
-    height: 2em;
+    height: 2rem;
     justify-content: center;
-    min-width: 4em;
-    text-shadow: 0.1em 0.1em 0 var(--color-grey-dark);
+    min-width: 4rem;
+    text-shadow: 0.1rem 0.1rem 0 var(--color-grey-dark);
     transition: all 0.2s ease;
 }
 
 .button:hover {
-    box-shadow: 0.1em 0.1em 0.2em var(--color-blue-alpha);
+    box-shadow: 0.1rem 0.1rem 0.2rem var(--color-blue-alpha);
 }
 
 .button:active {
-    box-shadow: inset 0.1em 0.1em 0.2em var(--color-black-alpha);
+    box-shadow: inset 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
 }
 
 .button * {
@@ -127,20 +131,20 @@ main {
 }
 
 .button#toggle:has(.fa-play) {
-    box-shadow: inset 0.1em 0.1em 0.2em var(--color-black-alpha);
+    box-shadow: inset 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
 }
 
 .slider {
-    -webkit-backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: var(--blur-controls);
     align-items: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: var(--blur-controls);
     background-color: var(--color-black-alpha);
-    border-radius: 1em;
+    border-radius: 1rem;
     display: flex;
-    gap: 0.5em;
-    height: 2em;
+    gap: 0.5rem;
+    height: 2rem;
     justify-content: center;
-    padding: 0 1em;
+    padding: 0 1rem;
 }
 
 .slider span,
@@ -156,7 +160,7 @@ main {
     -webkit-appearance: none;
     appearance: none;
     background-color: transparent;
-    min-width: 18em;
+    min-width: 18rem;
 }
 
 .slider input[type="range"]:focus {
@@ -167,19 +171,19 @@ main {
     -webkit-appearance: none;
     appearance: none;
     background: var(--color-blue);
-    border-radius: 0.2em;
-    box-shadow: inset 0.1em 0.1em 0.2em 0 var(--color-black-alpha);
+    border-radius: 0.2rem;
+    box-shadow: inset 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
     cursor: pointer;
-    height: 0.4em;
+    height: 0.4rem;
 }
 
 .slider input[type="range"]::-moz-range-track {
     -moz-appearance: none;
     appearance: none;
     background: var(--color-blue);
-    border-radius: 0.2em;
+    border-radius: 0.2rem;
     cursor: pointer;
-    height: 0.4em;
+    height: 0.4rem;
 }
 
 .slider input[type="range"]::-ms-track {
@@ -187,24 +191,24 @@ main {
     -webkit-appearance: none;
     appearance: none;
     background: var(--color-violet);
-    border-radius: 0.2em;
+    border-radius: 0.2rem;
     cursor: pointer;
-    height: 0.2em;
+    height: 0.2rem;
 }
 
 .slider input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     aspect-ratio: 1/1;
-    background-color: var(--color-snow);
+    background-color: var(--color-white);
     border-radius: 50%;
-    border: 0.2em solid var(--color-blue-dark);
-    bottom: 0.3em;
-    box-shadow: 0.1em 0.1em 0.2em 0 var(--color-black-alpha);
+    border: 0.2rem solid var(--color-blue-dark);
+    bottom: 0.3rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
     cursor: grab;
     position: relative;
     transition: all 0.1s ease;
-    width: 1em;
+    width: 1rem;
 }
 
 .slider input[type="range"]::-webkit-slider-thumb:active {
@@ -217,13 +221,13 @@ main {
     appearance: none;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    border: 0.2em solid var(--color-blue-dark);
-    bottom: 0.3em;
-    box-shadow: 0.1em 0.1em 0.2em 0 var(--color-black-alpha);
+    border: 0.2rem solid var(--color-blue-dark);
+    bottom: 0.3rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
     cursor: grab;
     position: relative;
     transition: all 0.1s ease;
-    width: 1em;
+    width: 1rem;
 }
 
 .slider input[type="range"]::-moz-range-thumb:active {
@@ -237,13 +241,13 @@ main {
     appearance: none;
     aspect-ratio: 1/1;
     border-radius: 50%;
-    border: 0.2em solid var(--color-blue-dark);
-    bottom: 0.3em;
-    box-shadow: 0.1em 0.1em 0.2em 0 var(--color-black-alpha);
+    border: 0.2rem solid var(--color-blue-dark);
+    bottom: 0.3rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
     cursor: grab;
     position: relative;
     transition: all 0.1s ease;
-    width: 1em;
+    width: 1rem;
 }
 
 .slider input[type="range"]::-ms-thumb:active {
@@ -254,8 +258,8 @@ main {
 .checkbox {
     align-items: center;
     display: flex;
-    gap: 0.5em;
-    height: 2em;
+    gap: 0.5rem;
+    height: 2rem;
     justify-content: center;
 }
 
@@ -264,7 +268,7 @@ main {
     aspect-ratio: 1/1;
     cursor: pointer;
     display: flex;
-    height: 1.2em;
+    height: 1.2rem;
     justify-content: center;
 }
 
