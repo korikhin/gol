@@ -1,22 +1,20 @@
 const EDGE = 10;
 const CELL = EDGE + 2;
 const ROWS = 60;
-const COLS = 80;
-
-const fpsDefault = 30;
-const moldOpacity = 10;
+const COLS = 106;
+const FPS = 30;
+const OPACITY = 10;
 
 let grid;
-let moldMode;
+let traceMode;
 
-let pCol;
-let pRow;
+let pRow, pCol;
 
 function setup() {
   createCanvas(COLS * CELL, ROWS * CELL).parent("display");
 
   colorMode(HSB, 360, 255, 255, 100);
-  frameRate(fpsDefault);
+  frameRate(FPS);
   noStroke();
 
   setupControls();
@@ -24,7 +22,7 @@ function setup() {
 }
 
 function mousePressed() {
-  if (isLooping() || moldMode) return;
+  if (isLooping() || traceMode) return;
 
   const row = Math.floor(mouseY / CELL);
   const col = Math.floor(mouseX / CELL);
@@ -38,7 +36,7 @@ function mousePressed() {
 }
 
 function mouseDragged() {
-  if (isLooping() || moldMode) return;
+  if (isLooping() || traceMode) return;
 
   const row = Math.floor(mouseY / CELL);
   const col = Math.floor(mouseX / CELL);
@@ -54,7 +52,7 @@ function mouseDragged() {
 }
 
 function mouseMoved() {
-  if (isLooping() || moldMode || mouseIsPressed) return;
+  if (isLooping() || traceMode || mouseIsPressed) return;
 
   const row = Math.floor(mouseY / CELL);
   const col = Math.floor(mouseX / CELL);
@@ -78,10 +76,10 @@ function mouseMoved() {
 }
 
 function draw() {
-  if (!moldMode) clear();
+  if (!traceMode) clear();
 
   const fps = select("#fps");
-  frameRate(fps ? fps.value() : fpsDefault);
+  frameRate(fps ? fps.value() : FPS);
 
   updateGrid();
   drawGrid();
@@ -140,7 +138,7 @@ function drawGrid() {
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLS; j++) {
       if (grid[i][j]) {
-        fill(floor(random(360)), 255, 250, moldMode ? moldOpacity : 100);
+        fill(floor(random(360)), 255, 250, traceMode ? OPACITY : 100);
         drawCell(i, j);
       }
     }
@@ -153,7 +151,7 @@ function drawCell(row, col) {
 
 function setupControls() {
   const buttonToggle = select("#toggle");
-  buttonToggle.mouseReleased(function () {
+  buttonToggle.mouseClicked(function () {
     const icon = this.elt.children[0];
     icon.classList.toggle("fa-pause");
     icon.classList.toggle("fa-play");
@@ -162,34 +160,30 @@ function setupControls() {
   });
 
   const buttonStep = select("#step");
-  buttonStep.mouseReleased(() => {
+  buttonStep.mouseClicked(() => {
     if (!isLooping()) {
       redraw();
     }
   });
 
   const buttonReset = select("#reset");
-  buttonReset.mouseReleased(() => {
-    grid = makeGrid(ROWS, COLS, true);
+  buttonReset.mouseClicked(() => {
     clear();
+    grid = makeGrid(ROWS, COLS, true);
     if (!isLooping()) {
       drawGrid();
     }
   });
 
   const buttonClear = select("#clear");
-  buttonClear.mouseReleased(() => {
-    grid = makeGrid(ROWS, COLS);
+  buttonClear.mouseClicked(() => {
     clear();
+    grid = makeGrid(ROWS, COLS);
   });
 
-  const moldCheckbox = select("#mold");
-  moldMode = moldCheckbox.checked();
-  moldCheckbox.changed(function () {
-    moldMode = this.checked();
-    if (!isLooping() && !moldMode) {
-      clear();
-      drawGrid();
-    }
+  const traceCheckbox = select("#trace");
+  traceMode = traceCheckbox.checked();
+  traceCheckbox.changed(function () {
+    traceMode = this.checked();
   });
 }

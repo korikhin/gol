@@ -1,10 +1,13 @@
 @charset "utf-8";
 
 :root {
-    --index: calc(1vh + 1vw);
+    /* --index: calc(1vh + 1vw); */
 
     --blur-controls: blur(0.15rem);
     --blur-display: blur(1rem);
+
+    --controls-height: 2rem;
+    --controls-radius: calc(var(--controls-height) * 0.5);
 }
 
 /* Palette */
@@ -50,9 +53,9 @@ body {
     background-attachment: fixed;
     background-color: var(--color-grey-light);
     background-image: repeating-radial-gradient(
-            circle at calc(-1 * var(--index)) calc(-2 * var(--index)),
+            circle at 0 0,
             transparent 0,
-            var(--color-grey-light) 22%
+            var(--color-grey-light) 22.5%
         ),
         repeating-linear-gradient(var(--color-grey-light-alpha), var(--color-blue-alpha));
     display: flex;
@@ -107,14 +110,15 @@ main {
     align-items: center;
     backdrop-filter: var(--blur-controls);
     background-color: var(--color-grey-dark-alpha);
-    border-radius: 1rem;
+    border-radius: var(--controls-radius);
     border: 0.1rem solid var(--color-grey-dark);
     box-shadow: 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
     cursor: pointer;
     display: flex;
-    height: 2rem;
+    height: var(--controls-height);
     justify-content: center;
-    min-width: 4rem;
+    min-width: calc(var(--controls-height) * 2);
+    padding: 0 var(--controls-radius);
     text-shadow: 0.1rem 0.1rem 0 var(--color-grey-dark);
     transition: all 0.2s ease;
 }
@@ -140,12 +144,12 @@ main {
     align-items: center;
     backdrop-filter: var(--blur-controls);
     background-color: var(--color-black-alpha);
-    border-radius: 1rem;
+    border-radius: var(--controls-radius);
     display: flex;
     gap: 0.5rem;
-    height: 2rem;
+    height: var(--controls-height);
     justify-content: center;
-    padding: 0 1rem;
+    padding: 0 var(--controls-radius);
 }
 
 .slider span,
@@ -161,11 +165,7 @@ main {
     -webkit-appearance: none;
     appearance: none;
     background-color: transparent;
-    min-width: 18rem;
-}
-
-.slider input[type="range"]:focus {
-    outline-color: var(--color-blue);
+    min-width: calc(var(--controls-height) * 8);
 }
 
 .slider input[type="range"]::-webkit-slider-runnable-track {
@@ -260,7 +260,7 @@ main {
     align-items: center;
     display: flex;
     gap: 0.5rem;
-    height: 2rem;
+    height: var(--controls-height);
     justify-content: center;
 }
 
@@ -268,7 +268,6 @@ main {
     accent-color: var(--color-blue);
     aspect-ratio: 1/1;
     cursor: pointer;
-    display: flex;
     height: 1.2rem;
     justify-content: center;
 }
