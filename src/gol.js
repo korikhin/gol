@@ -9,19 +9,72 @@ const moldOpacity = 10;
 let grid;
 let moldMode;
 
-let pCol = -1;
-let pRow = -1;
+let pCol;
+let pRow;
 
 function setup() {
-  createCanvas(COLS * CELL, ROWS * CELL).parent("#display");
+  createCanvas(COLS * CELL, ROWS * CELL).parent("display");
 
   colorMode(HSB, 360, 255, 255, 100);
   frameRate(fpsDefault);
   noStroke();
 
   setupControls();
-
   grid = makeGrid(ROWS, COLS, true);
+}
+
+function mousePressed() {
+  if (isLooping() || moldMode) return;
+
+  const row = Math.floor(mouseY / CELL);
+  const col = Math.floor(mouseX / CELL);
+  if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
+
+  fill(0);
+  drawCell(row, col);
+  grid[row][col] = !grid[row][col];
+
+  return false;
+}
+
+function mouseDragged() {
+  if (isLooping() || moldMode) return;
+
+  const row = Math.floor(mouseY / CELL);
+  const col = Math.floor(mouseX / CELL);
+  if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
+
+  fill(0);
+  if (!grid[row][col]) {
+    drawCell(row, col);
+    grid[row][col] = true;
+  }
+
+  return false;
+}
+
+function mouseMoved() {
+  if (isLooping() || moldMode || mouseIsPressed) return;
+
+  const row = Math.floor(mouseY / CELL);
+  const col = Math.floor(mouseX / CELL);
+
+  fill(0);
+  if (pRow >= 0 && pCol >= 0 && !grid[pRow][pCol]) {
+    erase();
+    drawCell(pRow, pCol);
+    noErase();
+  }
+  if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
+    if (!grid[row][col]) {
+      drawCell(row, col);
+    }
+
+    pRow = row;
+    pCol = col;
+  }
+
+  return false;
 }
 
 function draw() {
@@ -96,41 +149,6 @@ function drawGrid() {
 
 function drawCell(row, col) {
   square(col * CELL + 1, row * CELL + 1, EDGE);
-}
-
-function mousePressed() {
-  if (isLooping() || moldMode) return;
-
-  const row = Math.floor(mouseY / CELL);
-  const col = Math.floor(mouseX / CELL);
-  if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
-
-  fill(0);
-  drawCell(row, col);
-
-  grid[row][col] = !grid[row][col];
-}
-
-function mouseMoved() {
-  if (isLooping() || moldMode) return;
-
-  const row = Math.floor(mouseY / CELL);
-  const col = Math.floor(mouseX / CELL);
-
-  fill(0);
-  if (pRow >= 0 && pCol >= 0 && !grid[pRow][pCol]) {
-    erase();
-    drawCell(pRow, pCol);
-    noErase();
-  }
-  if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
-    if (!grid[row][col]) {
-      drawCell(row, col);
-    }
-
-    pRow = row;
-    pCol = col;
-  }
 }
 
 function setupControls() {
