@@ -5,7 +5,7 @@ const COLS = 106;
 const FPS = 30;
 const OPACITY = 10;
 
-let grid;
+let cells;
 let traceMode;
 
 let pRow, pCol;
@@ -13,12 +13,34 @@ let pRow, pCol;
 function setup() {
   createCanvas(COLS * CELL, ROWS * CELL).parent("display");
 
-  colorMode(HSB, 360, 255, 255, 100);
+  colorMode(HSB, 360, 100, 100, 100);
   frameRate(FPS);
-  noStroke();
+  drawGrid();
 
   setupControls();
-  grid = makeGrid(ROWS, COLS, true);
+  cells = makeCells(ROWS, COLS, true);
+}
+
+function draw() {
+  if (!traceMode) {
+    clear();
+    drawGrid();
+  }
+
+  const fps = select("#fps");
+  frameRate(fps ? fps.value() : FPS);
+
+  updateCells();
+  drawCells();
+}
+
+function drawGrid() {
+  stroke(232, 60, 98, 30); // NOTE: --color-blue with an alpha of 30%
+
+  for (let d = CELL; d < Math.max(height, width); d += CELL) {
+    if (d < height) line(0, d, width, d);
+    if (d < width) line(d, 0, d, height);
+  }
 }
 
 function mousePressed() {
@@ -30,7 +52,7 @@ function mousePressed() {
 
   fill(0);
   drawCell(row, col);
-  grid[row][col] = !grid[row][col];
+  cells[row][col] = !cells[row][col];
 
   return false;
 }
@@ -43,9 +65,9 @@ function mouseDragged() {
   if (row < 0 || row >= ROWS || col < 0 || col >= COLS) return;
 
   fill(0);
-  if (!grid[row][col]) {
+  if (!cells[row][col]) {
     drawCell(row, col);
-    grid[row][col] = true;
+    cells[row][col] = true;
   }
 
   return false;
@@ -58,13 +80,13 @@ function mouseMoved() {
   const col = Math.floor(mouseX / CELL);
 
   fill(0);
-  if (pRow >= 0 && pCol >= 0 && !grid[pRow][pCol]) {
+  if (pRow >= 0 && pCol >= 0 && !cells[pRow][pCol]) {
     erase();
     drawCell(pRow, pCol);
     noErase();
   }
   if (row >= 0 && row < ROWS && col >= 0 && col < COLS) {
-    if (!grid[row][col]) {
+    if (!cells[row][col]) {
       drawCell(row, col);
     }
 
@@ -75,22 +97,12 @@ function mouseMoved() {
   return false;
 }
 
-function draw() {
-  if (!traceMode) clear();
-
-  const fps = select("#fps");
-  frameRate(fps ? fps.value() : FPS);
-
-  updateGrid();
-  drawGrid();
-}
-
-function makeGrid(rows, cols, toPopulate = false) {
+function makeCells(rows, cols, toPopulate = false) {
   const arr = Array.from({ length: rows }, () => Array(cols).fill(false));
-  return toPopulate ? fillGrid(arr) : arr;
+  return toPopulate ? fillCells(arr) : arr;
 }
 
-function fillGrid(arr) {
+function fillCells(arr) {
   const density = 0.5;
 
   for (let i = 0; i < ROWS; i++) {
@@ -102,12 +114,12 @@ function fillGrid(arr) {
   return arr;
 }
 
-function updateGrid() {
-  const newGrid = makeGrid(ROWS, COLS);
+function updateCells() {
+  const newCells = makeCells(ROWS, COLS);
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLS; j++) {
       const neighbors = countNeighbors(i, j);
-      newGrid[i][j] = grid[i][j]
+      newCells[i][j] = cells[i][j]
         ? neighbors === 2 || neighbors === 3
           ? 1
           : 0
@@ -117,7 +129,23 @@ function updateGrid() {
     }
   }
 
-  grid = newGrid;
+  cells = newCells;
+}
+
+function drawCell(row, col) {
+  noStroke();
+  square(col * CELL + 1, row * CELL + 1, EDGE);
+}
+
+function drawCells() {
+  for (let i = 0; i < ROWS; i++) {
+    for (let j = 0; j < COLS; j++) {
+      if (cells[i][j]) {
+        fill(floor(random(360)), 100, 100, traceMode ? OPACITY : 100);
+        drawCell(i, j);
+      }
+    }
+  }
 }
 
 function countNeighbors(x, y) {
@@ -127,26 +155,11 @@ function countNeighbors(x, y) {
       if (i === 0 && j === 0) continue;
       const row = (x + i + ROWS) % ROWS;
       const col = (y + j + COLS) % COLS;
-      count += grid[row][col];
+      count += cells[row][col];
     }
   }
 
   return count;
-}
-
-function drawGrid() {
-  for (let i = 0; i < ROWS; i++) {
-    for (let j = 0; j < COLS; j++) {
-      if (grid[i][j]) {
-        fill(floor(random(360)), 255, 250, traceMode ? OPACITY : 100);
-        drawCell(i, j);
-      }
-    }
-  }
-}
-
-function drawCell(row, col) {
-  square(col * CELL + 1, row * CELL + 1, EDGE);
 }
 
 function setupControls() {
@@ -169,16 +182,16 @@ function setupControls() {
   const buttonReset = select("#reset");
   buttonReset.mouseClicked(() => {
     clear();
-    grid = makeGrid(ROWS, COLS, true);
+    cells = makeCells(ROWS, COLS, true);
     if (!isLooping()) {
-      drawGrid();
+      drawCells();
     }
   });
 
   const buttonClear = select("#clear");
   buttonClear.mouseClicked(() => {
     clear();
-    grid = makeGrid(ROWS, COLS);
+    cells = makeCells(ROWS, COLS);
   });
 
   const traceCheckbox = select("#trace");
