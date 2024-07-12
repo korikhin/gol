@@ -1,6 +1,6 @@
 # Conway's Game of Life
 
-It's **interactive:** you can place or remove live cells anywhere on the canvas.
+It's **interactive:** you can place or remove live cells anywhere on the canvas. [Try](https://korikhin.github.io/gol/).
 
 ![Game of Life Demo](img/demo.webp "Demo")
 
