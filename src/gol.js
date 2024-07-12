@@ -18,7 +18,7 @@ function setup() {
   drawGrid();
 
   setupControls();
-  cells = makeCells(ROWS, COLS, true);
+  cells = makeCells(ROWS, COLS, true /* populate */);
 }
 
 function draw() {
