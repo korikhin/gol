@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Game of Life</title>
+        <link rel="icon" type="image/png" href="img/favicon.png" />
+        <link rel="stylesheet" href="css/main.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+            integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <script type="text/javascript" src="src/p5.min.js" defer></script>
+        <script type="text/javascript" src="src/gol.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <div class="title"><p>Tor🍩idal Conway's Game of Life</p></div>
+            <div class="display" id="display"></div>
+            <div class="controls" id="controls">
+                <button class="button" id="toggle" title="Play/Pause">
+                    <i class="fa-solid fa-pause"></i>
+                </button>
+                <button class="button" id="step" title="Forward">
+                    <i class="fa-solid fa-forward-step"></i>
+                </button>
+                <button class="button" id="reset" title="Reset">
+                    <i class="fa-solid fa-circle-nodes"></i>
+                </button>
+                <button class="button" id="clear" title="Clear">
+                    <i class="fa-solid fa-broom fa-shake"></i>
+                </button>
+                <div class="slider" title="Frame Rate">
+                    <span><i class="fa-solid fa-snowflake"></i></span>
+                    <input id="fps" type="range" min="5" max="120" value="30" step="5" />
+                    <span><i class="fa-solid fa-fire"></i></span>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" name="trace" id="trace" value="Trace" />
+                    <label for="trace">Trace</label>
+                    <span
+                        ><i title="Try it" class="fa-solid fa-circle-question info"></i
+                    ></span>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,281 @@
+@charset "utf-8";
+
+:root {
+    /* --index: calc(1vh + 1vw); */
+
+    --blur-controls: blur(0.15rem);
+    --blur-display: blur(1rem);
+
+    --controls-height: 2rem;
+    --controls-radius: calc(var(--controls-height) * 0.5);
+}
+
+/* Palette */
+:root {
+    --color-black-alpha: rgba(0, 0, 0, 0.3);
+
+    --color-blue-alpha: rgb(100, 120, 250, 0.7);
+    --color-blue-dark: rgb(80, 90, 190);
+    --color-blue: rgb(100, 120, 250);
+
+    --color-grey-dark-alpha: rgb(10, 10, 10, 0.7);
+    --color-grey-dark: rgb(51, 51, 51);
+    --color-grey-light-alpha: rgb(230, 230, 250, 0.3);
+    --color-grey-light: rgb(230, 230, 250);
+    --color-grey: rgb(170, 170, 170);
+
+    --color-white-alpha: rgb(255, 255, 255, 0.4);
+    --color-white: rgb(255, 255, 255);
+}
+
+* {
+    box-sizing: border-box;
+    color: var(--color-grey-dark);
+    font:
+        1rem/1rem "Courier New",
+        monospace,
+        sans-serif;
+    margin: 0;
+    outline: none;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+    min-height: fit-content;
+    min-width: fit-content;
+    width: 100%;
+}
+
+body {
+    align-items: center;
+    background-attachment: fixed;
+    background-color: var(--color-grey-light);
+    background-image: repeating-radial-gradient(
+            circle at 0 0,
+            transparent 0,
+            var(--color-grey-light) 22.5%
+        ),
+        repeating-linear-gradient(var(--color-grey-light-alpha), var(--color-blue-alpha));
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.title {
+    display: flex;
+    padding-left: 5%;
+    text-align: left;
+    width: 100%;
+}
+
+.title p {
+    font-weight: bold;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+}
+
+.display {
+    -webkit-backdrop-filter: var(--blur-display);
+    backdrop-filter: var(--blur-display);
+    background-color: var(--color-white-alpha);
+    border-radius: 1rem;
+    border: inset 0.4rem var(--color-blue);
+    box-shadow: 0.2rem 0.2rem 0.4rem var(--color-black-alpha);
+    max-width: fit-content;
+    padding: 1rem;
+}
+
+.display canvas {
+    cursor: pointer;
+    display: block;
+}
+
+.controls {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+}
+
+.button {
+    -webkit-backdrop-filter: var(--blur-controls);
+    align-items: center;
+    backdrop-filter: var(--blur-controls);
+    background-color: var(--color-grey-dark-alpha);
+    border-radius: var(--controls-radius);
+    border: 0.1rem solid var(--color-grey-dark);
+    box-shadow: 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
+    cursor: pointer;
+    display: flex;
+    height: var(--controls-height);
+    justify-content: center;
+    min-width: calc(var(--controls-height) * 2);
+    padding: 0 var(--controls-radius);
+    text-shadow: 0.1rem 0.1rem 0 var(--color-grey-dark);
+    transition: all 0.2s ease;
+}
+
+.button:hover {
+    box-shadow: 0.1rem 0.1rem 0.2rem var(--color-blue-alpha);
+}
+
+.button:active {
+    box-shadow: inset 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
+}
+
+.button * {
+    color: var(--color-grey);
+}
+
+.button#toggle:has(.fa-play) {
+    box-shadow: inset 0.1rem 0.1rem 0.2rem var(--color-black-alpha);
+}
+
+.slider {
+    -webkit-backdrop-filter: var(--blur-controls);
+    align-items: center;
+    backdrop-filter: var(--blur-controls);
+    background-color: var(--color-black-alpha);
+    border-radius: var(--controls-radius);
+    display: flex;
+    gap: 0.5rem;
+    height: var(--controls-height);
+    justify-content: center;
+    padding: 0 var(--controls-radius);
+}
+
+.slider span,
+.checkbox span {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+
+.slider input[type="range"] {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    min-width: calc(var(--controls-height) * 8);
+}
+
+.slider input[type="range"]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-blue);
+    border-radius: 0.2rem;
+    box-shadow: inset 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
+    cursor: pointer;
+    height: 0.4rem;
+}
+
+.slider input[type="range"]::-moz-range-track {
+    -moz-appearance: none;
+    appearance: none;
+    background: var(--color-blue);
+    border-radius: 0.2rem;
+    cursor: pointer;
+    height: 0.4rem;
+}
+
+.slider input[type="range"]::-ms-track {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-violet);
+    border-radius: 0.2rem;
+    cursor: pointer;
+    height: 0.2rem;
+}
+
+.slider input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    aspect-ratio: 1/1;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    border: 0.2rem solid var(--color-blue-dark);
+    bottom: 0.3rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
+    cursor: grab;
+    position: relative;
+    transition: all 0.1s ease;
+    width: 1rem;
+}
+
+.slider input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.2);
+}
+
+.slider input[type="range"]::-moz-range-thumb {
+    -moz-appearance: none;
+    appearance: none;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 0.2rem solid var(--color-blue-dark);
+    bottom: 0.3rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
+    cursor: grab;
+    position: relative;
+    transition: all 0.1s ease;
+    width: 1rem;
+}
+
+.slider input[type="range"]::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.2);
+}
+
+.slider input[type="range"]::-ms-thumb {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 0.2rem solid var(--color-blue-dark);
+    bottom: 0.3rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem 0 var(--color-black-alpha);
+    cursor: grab;
+    position: relative;
+    transition: all 0.1s ease;
+    width: 1rem;
+}
+
+.slider input[type="range"]::-ms-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.2);
+}
+
+.checkbox {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    height: var(--controls-height);
+    justify-content: center;
+}
+
+.checkbox input[type="checkbox"] {
+    accent-color: var(--color-blue);
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    height: 1.2rem;
+    justify-content: center;
+}
+
+.checkbox input[type="checkbox"]:hover {
+    accent-color: var(--color-blue-dark);
+}
+
+.info {
+    cursor: help;
+}
